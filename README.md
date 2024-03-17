@@ -7,7 +7,7 @@ Beyond Self-Attention for Sequential Recommendation (BSARec) leverages Fourier t
 
 ## Dataset
 In our experiments, we utilize six datasets, all stored in the `src/data` folder. 
-- For the Beauty, Sports, Toys, and Yelp datasets, we employed the datasets downloaded from [this repository]((https://github.com/Woeee/FMLP-Rec)). 
+- For the Beauty, Sports, Toys, and Yelp datasets, we employed the datasets downloaded from [this repository](https://github.com/Woeee/FMLP-Rec). 
 - For ML-1M and LastFM, we processed the data according to the procedure outlined in [this code](https://github.com/RUCAIBox/CIKM2020-S3Rec/blob/master/data/data_process.py).
 - The `src/data/*_same_target.npy` files are utilized for training DuoRec and FEARec, both of which incorporate contrastive learning.
 
