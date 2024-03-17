@@ -3,7 +3,7 @@ This is the official source code for our AAAI 2024 Paper ["An Attentive Inductiv
 
 ## Overview
 Beyond Self-Attention for Sequential Recommendation (BSARec) leverages Fourier transform to strike a balance between our inductive bias and self-attention.
-![BSARec](fig/model_architecture.pdf)
+![BSARec](fig/model_architecture.png)
 
 ## Dataset
 In our experiments, we utilize six datasets, all stored in the `src/data` folder. 
