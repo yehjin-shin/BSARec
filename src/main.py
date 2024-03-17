@@ -24,6 +24,7 @@ def main():
     args.num_users = num_users + 1
 
     args.checkpoint_path = os.path.join(args.output_dir, args.train_name + '.pt')
+    args.same_target_path = os.path.join(args.data_dir, args.data_name+'_same_target.npy')
     train_dataloader, eval_dataloader, test_dataloader = get_dataloder(args,seq_dic)
 
     logger.info(str(args))

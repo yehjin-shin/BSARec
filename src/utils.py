@@ -62,19 +62,6 @@ def parse_args():
     parser.add_argument("--num_items", default=10, type=int)
     parser.add_argument("--num_users", default=10, type=int)
 
-    # model args
-    parser.add_argument("--hidden_size", default=64, type=int, help="embedding dimension")
-    parser.add_argument("--num_hidden_layers", default=2, type=int, help="number of blocks")
-    parser.add_argument("--num_attention_heads", default=2, type=int)
-    parser.add_argument("--hidden_act", default="gelu", type=str) # gelu relu
-    parser.add_argument("--attention_probs_dropout_prob", default=0.5, type=float)
-    parser.add_argument("--hidden_dropout_prob", default=0.5, type=float)
-    parser.add_argument("--initializer_range", default=0.02, type=float)
-    parser.add_argument("--max_seq_length", default=50, type=int)
-    parser.add_argument("--model_type", default='BSARec', type=str)
-    parser.add_argument("--c", default=3, type=int)
-    parser.add_argument("--alpha", default=0.9, type=float)
-
     # train args
     parser.add_argument("--lr", default=0.001, type=float, help="learning rate of adam")
     parser.add_argument("--batch_size", default=256, type=int, help="number of batch_size")
@@ -90,6 +77,52 @@ def parse_args():
     parser.add_argument("--adam_beta2", default=0.999, type=float, help="adam second beta value")
     parser.add_argument("--gpu_id", default="0", type=str, help="gpu_id")
     parser.add_argument("--variance", default=5, type=float)
+
+    # model args
+    parser.add_argument("--model_type", default='BSARec', type=str)
+    parser.add_argument("--max_seq_length", default=50, type=int)
+    parser.add_argument("--hidden_size", default=64, type=int, help="embedding dimension")
+    parser.add_argument("--num_hidden_layers", default=2, type=int, help="number of blocks")
+    parser.add_argument("--hidden_act", default="gelu", type=str) # gelu relu
+    parser.add_argument("--num_attention_heads", default=2, type=int)
+    parser.add_argument("--attention_probs_dropout_prob", default=0.5, type=float)
+    parser.add_argument("--hidden_dropout_prob", default=0.5, type=float)
+    parser.add_argument("--initializer_range", default=0.02, type=float)
+
+    args, _ = parser.parse_known_args()
+
+    if args.model_type.lower() == 'bsarec':
+        parser.add_argument("--c", default=3, type=int)
+        parser.add_argument("--alpha", default=0.9, type=float)
+
+    elif args.model_type.lower() == 'bert4rec':
+        parser.add_argument("--mask_ratio", default=0.2, type=float)
+
+    elif args.model_type.lower() == 'caser':
+        parser.add_argument("--nh", default=8, type=int)
+        parser.add_argument("--nv", default=4, type=int)
+        parser.add_argument("--reg_weight", default=1e-4, type=float)
+
+    elif args.model_type.lower() == 'duorec':
+        parser.add_argument("--tau", default=1.0, type=float)
+        parser.add_argument("--lmd", default=0.1, type=float)
+        parser.add_argument("--lmd_sem", default=0.1, type=float)
+        parser.add_argument("--ssl", default='us_x', type=str)
+        parser.add_argument("--sim", default='dot', type=str)
+
+    elif args.model_type.lower() == 'fearec':
+        parser.add_argument("--tau", default=1.0, type=float)
+        parser.add_argument("--lmd", default=0.1, type=float)
+        parser.add_argument("--lmd_sem", default=0.1, type=float)
+        parser.add_argument("--ssl", default='us_x', type=str)
+        parser.add_argument("--sim", default='dot', type=str)
+        parser.add_argument("--spatial_ratio", default=0.1, type=float)
+        parser.add_argument("--global_ratio", default=0.6, type=float)
+        parser.add_argument("--fredom_type", default='us_x', type=str)
+        parser.add_argument("--fredom", default='True', type=str) # use eval function to use as boolean
+
+    elif args.model_type.lower() == 'gru4rec':
+        parser.add_argument("--gru_hidden_size", default=64, type=int, help="hidden size of GRU")
 
     return parser.parse_args()
 

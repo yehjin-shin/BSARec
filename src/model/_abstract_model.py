@@ -24,8 +24,7 @@ class SequentialRecModel(nn.Module):
         return sequence_emb
 
     def init_weights(self, module):
-        """ Initialize the weights.
-        """
+        """ Initialize the weights."""
         if isinstance(module, (nn.Linear, nn.Embedding)):
             # Slightly different from the TF version which uses truncated_normal for initialization
             # cf https://github.com/pytorch/pytorch/pull/5617
@@ -38,6 +37,18 @@ class SequentialRecModel(nn.Module):
             xavier_uniform_(module.weight_ih_l0)
         if isinstance(module, nn.Linear) and module.bias is not None:
             module.bias.data.zero_()
+
+    def get_bi_attention_mask(self, item_seq):
+        """Generate bidirectional attention mask for multi-head attention."""
+
+        attention_mask = (item_seq > 0).long()
+        extended_attention_mask = attention_mask.unsqueeze(1).unsqueeze(2)  # torch.int64
+
+        # bidirectional mask
+        extended_attention_mask = extended_attention_mask.to(dtype=next(self.parameters()).dtype)  # fp16 compatibility
+        extended_attention_mask = (1.0 - extended_attention_mask) * -10000.0
+
+        return extended_attention_mask
 
     def get_attention_mask(self, item_seq):
         """Generate left-to-right uni-directional attention mask for multi-head attention."""
@@ -60,8 +71,8 @@ class SequentialRecModel(nn.Module):
     def forward(self, input_ids, all_sequence_output=False):
         pass
 
-    def predict(self, input_ids, all_sequence_output=False):
-        return self.forward(input_ids, all_sequence_output)
+    def predict(self, input_ids, user_ids, all_sequence_output=False):
+        return self.forward(input_ids, user_ids, all_sequence_output)
 
     def calculate_loss(self, input_ids, answers):
         pass

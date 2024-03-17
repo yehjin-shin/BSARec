@@ -92,8 +92,9 @@ class Trainer:
             for i, batch in rec_data_iter:
                 # 0. batch_data will be sent into the device(GPU or CPU)
                 batch = tuple(t.to(self.device) for t in batch)
-                _, input_ids, answer = batch
-                loss = self.model.calculate_loss(input_ids, answer)
+
+                user_ids, input_ids, answers, neg_answer, same_target = batch
+                loss = self.model.calculate_loss(input_ids, answers, neg_answer, same_target, user_ids)
                     
                 self.optim.zero_grad()
                 loss.backward()
@@ -112,18 +113,22 @@ class Trainer:
             self.model.eval()
             pred_list = None
             answer_list = None
-            # if self.args.debug: import pdb; pdb.set_trace()
+
             for i, batch in rec_data_iter:
                 batch = tuple(t.to(self.device) for t in batch)
-                user_ids, input_ids, answers = batch
-                recommend_output = self.model.predict(input_ids)
+                user_ids, input_ids, answers, _, _ = batch
+                recommend_output = self.model.predict(input_ids, user_ids)
                 recommend_output = recommend_output[:, -1, :]# 推荐的结果
                 
                 rating_pred = self.predict_full(recommend_output)
                 rating_pred = rating_pred.cpu().data.numpy().copy()
                 batch_user_index = user_ids.cpu().numpy()
-
-                rating_pred[self.args.train_matrix[batch_user_index].toarray() > 0] = 0
+                
+                try:
+                    rating_pred[self.args.train_matrix[batch_user_index].toarray() > 0] = 0
+                except: # bert4rec
+                    rating_pred = rating_pred[:, :-1]
+                    rating_pred[self.args.train_matrix[batch_user_index].toarray() > 0] = 0
 
                 # reference: https://stackoverflow.com/a/23734295, https://stackoverflow.com/a/20104162
                 # argpartition time complexity O(n)  argsort O(nlogn)
