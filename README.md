@@ -19,7 +19,7 @@ conda activate bsarec
 ```
 
 ### How to train BSARec
-- Note that pretrained model (.pt) and train log file (.log) will saved in `BSARec/output`
+- Note that pretrained model (.pt) and train log file (.log) will saved in `src/output`
 - `train_name`: name for log file and checkpoint file
 ```
 python main.py  --data_name [DATASET] \
@@ -40,7 +40,7 @@ python main.py  --data_name Beauty \
 ```
 
 ### How to test pretrained BSARec
-- Note that pretrained model (.pt file) must be in `BSARec/output`
+- Note that pretrained model (.pt file) must be in `src/output`
 - `load_model`: pretrained model name without .pt
 ```
 python main.py  --data_name [DATASET] \
