@@ -182,7 +182,7 @@ class FrequencyLayer(nn.Module):
         self.out_dropout = nn.Dropout(args.hidden_dropout_prob)
         self.LayerNorm = LayerNorm(args.hidden_size, eps=1e-12)
         self.c = args.c // 2 + 1
-        self.beta = nn.Parameter(torch.randn(1, 1, args.hidden_size))
+        self.sqrt_beta = nn.Parameter(torch.randn(1, 1, args.hidden_size))
 
     def forward(self, input_tensor):
         # [batch, seq_len, hidden]
@@ -193,7 +193,7 @@ class FrequencyLayer(nn.Module):
         low_pass[:, self.c:, :] = 0
         low_pass = torch.fft.irfft(low_pass, n=seq_len, dim=1, norm='ortho')
         high_pass = input_tensor - low_pass
-        sequence_emb_fft = low_pass + (self.beta**2) * high_pass
+        sequence_emb_fft = low_pass + (self.sqrt_beta**2) * high_pass
 
         hidden_states = self.out_dropout(sequence_emb_fft)
         hidden_states = self.LayerNorm(hidden_states + input_tensor)
