@@ -5,6 +5,11 @@ This is the official source code for our AAAI 2024 Paper ["An Attentive Inductiv
 Beyond Self-Attention for Sequential Recommendation (BSARec) leverages Fourier transform to strike a balance between our inductive bias and self-attention.
 ![BSARec](fig/model_architecture.png)
 
+## Updates
+- (Seq 14, 2024) add data processing code
+- (Apr 20, 2024) rename variable 'beta' to 'sqrt_beta'
+- (Apr 16, 2024) add visualization code for figure 3
+
 ## Dataset
 In our experiments, we utilize six datasets, all stored in the `src/data` folder. 
 - For the Beauty, Sports, Toys, and Yelp datasets, we employed the datasets downloaded from [this repository](https://github.com/Woeee/FMLP-Rec). 
