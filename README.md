@@ -71,6 +71,20 @@ python main.py  --model_type SASRec \
                 --train_name SASRec_Beauty
 ```
 
+## Citation
+If you find our work useful, please consider citing our paper:
+```
+@inproceedings{shin2024bsarec,
+title={An attentive inductive bias for sequential recommendation beyond the self-attention},
+author={Shin, Yehjin and Choi, Jeongwhan and Wi, Hyowon and Park, Noseong},
+booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+volume={38},
+number={8},
+pages={8984--8992},
+year={2024}
+}
+```
+
 ## Contact
 If you have any inquiries regarding our paper or codes, feel free to reach out via email at yehjin.shin@yonsei.ac.kr.
 
