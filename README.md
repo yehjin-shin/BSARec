@@ -6,7 +6,7 @@ Beyond Self-Attention for Sequential Recommendation (BSARec) leverages Fourier t
 ![BSARec](fig/model_architecture.png)
 
 ## Updates
-- (Seq 14, 2024) add data processing code
+- (Sep 14, 2024) add data processing code
 - (Apr 20, 2024) rename variable 'beta' to 'sqrt_beta'
 - (Apr 16, 2024) add visualization code for figure 3
 
