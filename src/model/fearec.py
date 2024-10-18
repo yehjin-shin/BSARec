@@ -170,7 +170,7 @@ class FEARecEncoder(nn.Module):
 class FEARecBlock(nn.Module):
     def __init__(self, args, layer_num):
         super(FEARecBlock, self).__init__()
-        self.layer = FEARecLayer(args)
+        self.layer = FEARecLayer(args, layer_num)
         self.feed_forward = FeedForward(args)
 
     def forward(self, hidden_states, attention_mask):
