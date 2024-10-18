@@ -41,8 +41,11 @@ def main():
         else:
             args.checkpoint_path = os.path.join(args.output_dir, args.load_model + '.pt')
             trainer.load(args.checkpoint_path)
+
             logger.info(f"Load model from {args.checkpoint_path} for test!")
             scores, result_info = trainer.test(0)
+            args.checkpoint_path = os.path.join(args.output_dir, args.train_name + '.pt')
+            # torch.save(trainer.model.state_dict(), args.checkpoint_path)
 
     else:
         early_stopping = EarlyStopping(args.checkpoint_path, logger=logger, patience=args.patience, verbose=True)

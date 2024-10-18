@@ -50,7 +50,13 @@ class Trainer:
         new_dict = torch.load(file_name)
         self.logger.info(new_dict.keys())
         for key in new_dict:
-            original_state_dict[key]=new_dict[key]
+            if 'beta' in key:
+                # print(key)
+                # new_key = key.replace('beta', 'sqrt_beta')
+                # original_state_dict[new_key] = new_dict[key]
+                original_state_dict[key]=new_dict[key]
+            else:
+                original_state_dict[key]=new_dict[key]
         self.model.load_state_dict(original_state_dict)
 
     def predict_full(self, seq_out):
