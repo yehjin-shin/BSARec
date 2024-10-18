@@ -6,6 +6,9 @@ Beyond Self-Attention for Sequential Recommendation (BSARec) leverages Fourier t
 ![BSARec](fig/model_architecture.png)
 
 ## Updates
+- (Oct 18, 2024) correct default argument for layer-specific values in FEARec
+- (Oct 18, 2024) rename variables in model checkpoint
+- (Oct 18, 2024) organize layer classes within each model file
 - (Sep 14, 2024) add data processing code
 - (Apr 20, 2024) rename variable 'beta' to 'sqrt_beta'
 - (Apr 16, 2024) add visualization code for figure 3
